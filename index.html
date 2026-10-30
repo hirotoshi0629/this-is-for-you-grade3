@@ -241,5 +241,6 @@ function loadCard(id){let card=savedCardList().find(c=>c.id===id);if(!card)retur
 function deleteCard(id){let cards=savedCardList().filter(c=>c.id!==id);localStorage.setItem('u7_saved_cards',JSON.stringify(cards));renderSavedCards();toast('保存したカードを削除したよ')}
 function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(giftURL)new Audio(giftURL).play()}
 </script>
+<script src="site-update.js"></script>
 </body>
 </html>
