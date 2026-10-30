@@ -1,4 +1,15 @@
 (() => {
+  const openView = window.openView;
+  window.openView = function (id) {
+    const result = openView.apply(this, arguments);
+    if (id === 'maker') {
+      const shapes = document.getElementById('makerShapes');
+      if (shapes && !shapes.childElementCount) window.initMaker();
+      window.renderSavedCards?.();
+    }
+    return result;
+  };
+
   const art = [
     ['home-dictionary-watercolor.png', '形の絵が開いた絵本とカード'],
     ['home-karuta-watercolor.png', '形カードを聞き分ける子ども'],
