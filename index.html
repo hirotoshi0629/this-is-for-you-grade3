@@ -47,11 +47,11 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}button:focus-visible{o
 .avatar-item small{font-weight:800;font-size:.72rem;line-height:1.15}
 .avatar-counter{font-weight:900;color:#697d8a;margin:0 0 10px}
 .avatar-save-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-@media(max-width:760px){.avatar-shell{grid-template-columns:1fr}.avatar-stage{position:static;min-height:260px}.avatar-items{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.avatar-item-status{font-weight:900;font-size:.68rem;color:#516b79;background:#ffffffc9;padding:3px 6px;border-radius:999px}.avatar-item.locked{border-style:dashed}.avatar-shell{grid-template-columns:1fr}.avatar-stage{position:static;min-height:260px}.avatar-items{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style></head>
 <body>
 <main class="app">
-  <header class="topbar"><div class="brand"><div class="brandmark">🌈</div><span>かたちの森 <small lang="en">｜ Unit 7</small></span></div><div class="top-actions"><button class="pill points stamp-shop-nav" onclick="openView('stampCollection')">⭐ <span id="points">0</span>ポイント　🐾 スタンプ交換所</button><button class="pill" onclick="goHome()">ホーム</button></div></header>
+  <header class="topbar"><div class="brand"><div class="brandmark">🌈</div><span>かたちの森 <small lang="en">｜ Unit 7</small></span></div><div class="top-actions"><span class="pill points">⭐ <span id="points">0</span>ポイント</span><button class="pill" onclick="goHome()">ホーム</button></div></header>
   <section id="home" class="view active">
     <div class="home-hero"><div><div class="eyebrow" lang="en">LET'S TRY 1 · UNIT 7</div><h1 lang="en">This is <span>for you!</span></h1><p>形を聞いて、声に出して、お店で注文。世界にひとつだけのカードを作って大切な人に贈ろう！</p><button class="action primary" onclick="startForestMission('shop',1)">🎙️ マイクで英語を言ってみる</button><small class="subtle" style="display:block;margin-top:7px">最初に押したとき、ブラウザの確認でマイクを許可してね。</small></div><div class="hero-art" id="heroArt"></div></div>
     <div class="section-head"><div><h2>単元のじゅんばん</h2><p>授業の流れにそって進められるよ。</p></div><span class="tag">1 → 5</span></div>
@@ -80,20 +80,10 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}button:focus-visible{o
   <div class="content-card">
     <div class="avatar-shell">
       <div class="avatar-stage" aria-live="polite"><div class="eyebrow">MY LITTLE FRIEND</div><div class="avatar-animal" id="avatarAnimal">🦊</div><div class="avatar-name" id="avatarName">きつね</div><div class="avatar-worn" id="avatarWorn"></div></div>
-      <div class="avatar-picker"><div class="avatar-counter" id="avatarCounter">カテゴリー 1 / 12　｜　アイテム 1 / 30</div><div class="avatar-category-row" id="avatarCategories"></div><div class="avatar-items" id="avatarItems"></div><div class="avatar-save-row"><button class="action primary" onclick="saveAvatar()">このアバターを保存 💾</button><button class="action" onclick="resetAvatar()">最初の組み合わせにもどす</button></div><p class="subtle">選んだアイテムはこの端末に保存されます。コインや学習ポイントは使わず、何度でも試せます。</p></div>
+      <div class="avatar-picker"><div class="avatar-counter" id="avatarCounter">カテゴリー 1 / 12　｜　アイテム 1 / 30</div><div class="avatar-counter">使えるポイント：<b id="avatarBalance">0</b> ⭐　｜　アイテム交換：2ポイント</div><div class="avatar-category-row" id="avatarCategories"></div><div class="avatar-items" id="avatarItems"></div><div class="avatar-save-row"><button class="action primary" onclick="saveAvatar()">このアバターを保存 💾</button><button class="action" onclick="resetAvatar()">最初の組み合わせにもどす</button></div><p class="subtle">最初のアイテムは無料。ほしいアイテムは2ポイントで交換できます。選んだ内容と集めたアイテムはこの端末に保存されます。</p></div>
     </div>
   </div>
 </section><section id="forestAdventure" class="view app"><div class="forest-intro"><div><div class="eyebrow">BONUS ADVENTURE</div><h2>かたちの森を育てる冒険</h2><p class="subtle">地図の場所をタップして、エリアのミッションに挑戦しよう。</p></div><span class="forest-stamp" id="forestStamp">🌱 森のしずく 0こ</span></div><div class="forest-adventure-layout"><div><div class="forest-map-wrap"><img class="forest-map" src="forest-adventure-map.webp" alt="色鉛筆と水彩画風に描かれた、かたちの森の地図"><button class="forest-pin" data-zone="shop" onclick="selectForestZone('shop')">🏪 にじいろ商店街</button><button class="forest-pin" data-zone="square" onclick="selectForestZone('square')">🌈 いろどり広場</button><button class="forest-pin" data-zone="workshop" onclick="selectForestZone('workshop')">🎨 カード工房</button><button class="forest-pin" data-zone="giftpark" onclick="selectForestZone('giftpark')">🎁 プレゼント公園</button><button class="forest-pin" data-zone="listening" onclick="selectForestZone('listening')">👂 ききとりの小道</button></div><p class="forest-note">はじめは好きな場所からで大丈夫。ミッションをクリアして、森のしずくとエリアバッジを集めよう。</p></div><div class="forest-details" id="forestDetails"></div></div><div class="content-card forest-challenge hidden" id="forestChallenge"><div class="progressline"><b id="forestQuestionLabel">ミッション 1 / 5</b><span id="forestScoreLabel">せいかい 0</span></div><div class="game-prompt"><div class="prompt-mark">👂</div><h3 id="forestPrompt">音を聞いて、合うカードをタッチ</h3><div class="subtle">にている色や形にも気をつけてね。</div><button class="action primary" onclick="replayForestQuestion()">🔊 もう一度聞く</button></div><div class="forest-choices" id="forestChoices"></div><div class="forest-feedback" id="forestFeedback" aria-live="polite"></div></div></section><div id="toast" class="toast" role="status"></div>
-<section id="stampCollection" class="view app">
-  <div class="view-head"><button class="back" onclick="goHome()">← もどる</button><div><h2>生き物スタンプ帳・交換所</h2><p>ほしい生き物を選んで、ポイントと交換しよう。</p></div></div>
-  <div class="content-card">
-    <div class="stamp-summary"><div class="stamp-stat">⭐ 使えるポイント<br><span id="stampBalance">0</span></div><div class="stamp-stat">📖 あつめたスタンプ<br><span id="stampOwnedCount">0 / 200</span></div><div class="stamp-stat">🐾 まだ出会っていない生き物<br><span id="stampRemainingCount">200種類</span></div></div>
-    <div class="stamp-help"><b>絵柄は交換するまで「？」</b><br>生き物の名前・レア度・必要ポイントを見て、ほしいスタンプを選べるよ。同じ生き物は1回だけ交換できます。<br><span class="stamp-missing-art">レア度は、身近さ・出会いにくさ・スタンプとしての特別感をもとにしたゲーム上の目安です。実際の生息数や絶滅危惧ランクを示すものではありません。</span></div>
-    <div class="stamp-rarity-legend"><b>レア度のめやす：</b>ノーマル（身近）→ めずらしい → レア → とくべつ（出会いにくく、特別感のある生き物）</div>
-    <div class="stamp-tabs" id="stampTabs"></div><div class="stamp-selected-panel" id="stampSelectedPanel"><span>スタンプを選ぶと、ここに交換できるか表示されるよ。</span></div><div class="stamp-grid" id="stampGrid"></div>
-    <p class="footer-note">ポイントと集めたスタンプは、この端末のブラウザに保存されます。</p>
-  </div>
-</section>
 <section id="forestSpeechChallenge" class="view app"><div class="view-head"><button class="back" onclick="openView('forestAdventure')">← 地図にもどる</button><div><h2 id="forestSpeechTitle">英語で言ってみよう</h2><p>お手本を聞いて、声に出してみよう。</p></div></div><div class="content-card forest-speech-card"><div class="eyebrow">FOREST MISSION</div><p class="subtle" id="forestSpeechInstruction"></p><div class="forest-speech-phrase" id="forestSpeechPhrase" lang="en"></div><div class="word-tools" style="justify-content:center"><button class="action primary" onclick="playForestSpeech(.78)">🔊 お手本を聞く</button><button class="action blue" onclick="playForestSpeech(.48)">🐢 ゆっくり聞く</button><button class="action blue" onclick="recognizeForestSpeech()">🎙️ マイクで言ってみる</button><button class="action" onclick="completeForestSpeechStep()">声に出せた！ ✓</button></div><div id="forestSpeechStatus" class="forest-speech-status" aria-live="polite">お手本のあと、自分でも声に出してみよう。</div><div id="forestSpeechSequenceControls" class="hidden"><button class="action primary" onclick="advanceForestSpeechSequence()">つぎの言葉へ →</button></div><p class="privacy-note">マイクが使えない端末でも、声に出して練習したあと「声に出せた！」で進めます。自動判定ではブラウザの音声認識機能を利用し、音声の処理はブラウザ提供元の方針に従います。</p></div></section>
 <script>
 const shapes=[
@@ -170,10 +160,10 @@ function updateProgress(){document.getElementById('points').textContent=points;d
 function dailyPointDate(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function dailyPointState(){let s;try{s=JSON.parse(localStorage.getItem('u7_daily_practice_points')||'null')}catch{s=null}if(!s||s.date!==dailyPointDate())s={date:dailyPointDate(),points:0};s.points=Math.max(0,Number(s.points)||0);return s}
 function rewardPracticePoints(amount){const s=dailyPointState(),earned=Math.min(amount,Math.max(0,20-s.points));if(!earned)return 0;s.points+=earned;points+=earned;localStorage.setItem('u7_daily_practice_points',JSON.stringify(s));saveProgress();return earned}
-function finishActivity(id){if(!done.includes(id)){done.push(id);points+=10;saveProgress();toast('やったね！スタンプと10ポイントをゲット 🌟')}else{const earned=rewardPracticePoints(2);toast(earned?`もう一度チャレンジ！${earned}ポイントゲット 🌟`:'今日の練習ポイントはいっぱい！練習は続けられるよ。')}}
+function finishActivity(id){if(!done.includes(id)){done.push(id);points+=10;saveProgress();toast('やったね！10ポイントをゲット 🌟')}else{const earned=rewardPracticePoints(2);toast(earned?`もう一度チャレンジ！${earned}ポイントゲット 🌟`:'今日の練習ポイントはいっぱい！練習は続けられるよ。')}}
 function finishMakerActivity(){if(!currentCardItems().length){toast('形をひとつ以上カードに置いてから「できた！」を押そう');return}finishActivity('maker')}
 function toast(t){let el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2300)}
-function openView(id){if(id!=='maker')forestActiveMakerMission=null;if(id!=='shop')forestActiveShopMission=null;document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='dictionary')renderDictionary();if(id==='shop')renderShop();if(id==='maker'){if(!document.getElementById('makerShapes').childElementCount)initMaker();renderSavedCards()}if(id==='forestAdventure')renderForestMap();if(id==='stampCollection')renderStampShop();window.scrollTo({top:0,behavior:'smooth'})}
+function openView(id){if(id!=='maker')forestActiveMakerMission=null;if(id!=='shop')forestActiveShopMission=null;document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='dictionary')renderDictionary();if(id==='shop')renderShop();if(id==='maker'){if(!document.getElementById('makerShapes').childElementCount)initMaker();renderSavedCards()}if(id==='forestAdventure')renderForestMap();window.scrollTo({top:0,behavior:'smooth'})}
 function goHome(){forestActiveMakerMission=null;forestActiveShopMission=null;document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('home').classList.add('active');updateProgress();window.scrollTo({top:0,behavior:'smooth'})}
 function getForestCleared(){let saved;try{saved=JSON.parse(localStorage.getItem('u7_forest_cleared')||'null')}catch(e){saved=null}if(!Array.isArray(saved)){saved=localStorage.getItem('u7_forest_trial_clear')==='yes'?['listening-6']:[]}
 const valid=saved.filter((id,i)=>{const m=String(id).match(/^([a-z]+)-(\d+)$/);return m&&forestZones[m[1]]&&Number(m[2])>=1&&Number(m[2])<=forestZones[m[1]].missions.length&&saved.indexOf(id)===i});
@@ -304,25 +294,30 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     {name:'キラキラ', bases:['しゃぼん玉','紙ふぶき','星の光','ハート光','虹の光'], icons:['🫧','🎊','🌟','💖','🌈'], colors:['#ffd7e1','#ffe1ad','#d9eaff','#e9ddff','#d7f1dc','#fff0a8']}
   ];
   var state={category:0,selections:Array(12).fill(0)};
+  var ownedItems=new Set();
   var saved=localStorage.getItem('u7_avatar_workshop');
-  try{if(saved){var parsed=JSON.parse(saved);if(Array.isArray(parsed.selections)&&parsed.selections.length===12)state.selections=parsed.selections.map(function(n){return Math.max(0,Math.min(29,Number(n)||0))});}}catch(e){}
+  try{if(saved){var parsed=JSON.parse(saved);if(Array.isArray(parsed.selections)&&parsed.selections.length===12)state.selections=parsed.selections.map(function(n){return Math.max(0,Math.min(29,Number(n)||0))});if(Array.isArray(parsed.owned))parsed.owned.forEach(function(k){ownedItems.add(String(k))});}}catch(e){}
+  for(var ci=0;ci<12;ci++){ownedItems.add(ci+':0');ownedItems.add(ci+':'+state.selections[ci]);}
   var selectedCategory=0;
+  var avatarItemCost=2;
+  function persistAvatar(){localStorage.setItem('u7_avatar_workshop',JSON.stringify({selections:state.selections,owned:Array.from(ownedItems)}))}
   function makeItems(cat,catIndex){if(catIndex===0)return animalOptions.map(function(animal,i){return {label:animal[0],icon:animal[1],color:cat.colors[i%cat.colors.length]}});var items=[];cat.bases.forEach(function(base,bi){cat.colors.forEach(function(color,ci){items.push({label:colorNames[ci]+base,icon:cat.icons[bi],color:color})})});return items}
   var colorNames=['さくら色の','ひだまり色の','そら色の','すみれ色の','わかば色の','星あかり色の'];
   function render(){
     var cats=document.getElementById('avatarCategories'),items=document.getElementById('avatarItems');
     cats.innerHTML=categories.map(function(c,i){return '<button class="avatar-cat '+(i===selectedCategory?'active':'')+'" onclick="selectAvatarCategory('+i+')">'+c.name+' <small>30</small></button>'}).join('');
     var list=makeItems(categories[selectedCategory],selectedCategory);
-    items.innerHTML=list.map(function(item,i){return '<button class="avatar-item '+(state.selections[selectedCategory]===i?'selected':'')+'" style="--swatch:'+item.color+'" onclick="chooseAvatarItem('+i+')" aria-label="'+item.label+'"><span class="avatar-item-icon">'+item.icon+'</span><small>'+item.label+'</small></button>'}).join('');
+    items.innerHTML=list.map(function(item,i){var key=selectedCategory+':'+i,has=ownedItems.has(key),active=state.selections[selectedCategory]===i;var stateLabel=has?(active?'選択中':'所持'):(avatarItemCost+'ポイントで交換');return '<button class="avatar-item '+(active?'selected ':'')+(!has?'locked':'')+'" style="--swatch:'+item.color+'" onclick="chooseAvatarItem('+i+')" aria-label="'+item.label+'、'+stateLabel+'"><span class="avatar-item-icon">'+item.icon+'</span><small>'+item.label+'</small><span class="avatar-item-status">'+stateLabel+'</span></button>'}).join('');
     document.getElementById('avatarCounter').textContent='カテゴリー '+(selectedCategory+1)+' / 12　｜　アイテム '+(state.selections[selectedCategory]+1)+' / 30　｜　合計 360種類';
+    document.getElementById('avatarBalance').textContent=points;
     var animal=animalOptions[state.selections[0]%animalOptions.length];
     document.getElementById('avatarAnimal').textContent=animal[1];document.getElementById('avatarName').textContent=animal[0];
     document.getElementById('avatarWorn').innerHTML=categories.slice(1).map(function(c,i){var item=makeItems(c,i+1)[state.selections[i+1]];return '<span>'+item.icon+' '+item.label+'</span>'}).join('');
   }
   window.selectAvatarCategory=function(i){selectedCategory=Math.max(0,Math.min(11,Number(i)||0));render()};
-  window.chooseAvatarItem=function(i){state.selections[selectedCategory]=Math.max(0,Math.min(29,Number(i)||0));render()};
-  window.saveAvatar=function(){localStorage.setItem('u7_avatar_workshop',JSON.stringify({selections:state.selections}));var t=document.getElementById('toast');if(t){t.textContent='アバターを保存したよ';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1800)}};
-  window.resetAvatar=function(){state.selections=Array(12).fill(0);selectedCategory=0;localStorage.removeItem('u7_avatar_workshop');render()};
+  window.chooseAvatarItem=function(i){i=Math.max(0,Math.min(29,Number(i)||0));var key=selectedCategory+':'+i;if(!ownedItems.has(key)){if(points<avatarItemCost){toast('ポイントが足りないよ。練習してポイントを集めよう！');return}points-=avatarItemCost;ownedItems.add(key);saveProgress()}state.selections[selectedCategory]=i;persistAvatar();render()};
+  window.saveAvatar=function(){persistAvatar();toast('アバターを保存したよ')};
+  window.resetAvatar=function(){state.selections=Array(12).fill(0);selectedCategory=0;persistAvatar();render()};
   render();
 })();
 </script><script src="site-update.js"></script>
