@@ -43,9 +43,9 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}button:focus-visible{o
 .avatar-cat{background:#fffaf2;border:2px solid #eee3d0;border-radius:999px;padding:8px 11px;font-weight:900}
 .avatar-cat.active{background:#e7f5ea;border-color:#76bb88}
 .avatar-items{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.avatar-item{background:linear-gradient(145deg,var(--swatch),#fffaf2 82%);border:2px solid #f0e4d2;border-radius:16px;min-height:100px;padding:8px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.avatar-item{background:linear-gradient(145deg,var(--swatch),#fffaf2 82%);border:2px solid #f0e4d2;border-radius:16px;min-height:126px;padding:10px 7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
 .avatar-item:hover,.avatar-item.selected{border-color:#e9a54c;transform:translateY(-1px)}
-.avatar-item-icon svg{width:42px;height:42px;display:block}
+.avatar-item-icon svg{width:60px;height:60px;display:block}
 .avatar-item small{font-weight:800;font-size:.72rem;line-height:1.15}
 .avatar-counter{font-weight:900;color:#697d8a;margin:0 0 10px}
 .avatar-save-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
@@ -402,7 +402,9 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
       if(kind==='boar')muzzle='<ellipse cx="108" cy="61" rx="11" ry="8" fill="'+a.a+'" stroke="'+ink+'" stroke-width="1.5"/><circle cx="109" cy="59" r="1.5" fill="'+ink+'"/><path d="M100 69Q103 78 107 70M112 70Q116 78 119 68" fill="#fff4da"/>';
       if(kind==='elephant')muzzle='<path d="M104 54Q120 59 115 83Q112 98 103 91Q109 81 103 73Z" fill="'+a.c+'" stroke="'+ink+'" stroke-width="1.8"/><path d="M108 62Q114 66 112 72M108 84Q113 81 113 75" fill="none" stroke="'+a.a+'" stroke-width="2"/>';
       if(kind==='bird'||kind==='owl'||kind==='penguin'||kind==='dolphin'||kind==='seal'||kind==='turtle'||kind==='frog'||kind==='dragon')muzzle='';
-      if(kind==='fox'||kind==='wolf'||kind==='badger'||kind==='redpanda'||kind==='boar'||kind==='horse'||kind==='giraffe')mammalHead='<path d="M72 61Q70 48 80 37Q90 28 103 32Q113 35 115 47L130 57Q126 65 109 64Q99 71 87 68Z" fill="'+a.c+'"/>';
+      if(kind==='fox'||kind==='wolf'||kind==='badger'||kind==='redpanda'||kind==='boar')mammalHead='<path d="M70 68Q68 54 78 43Q87 33 101 36Q113 38 116 51L130 61Q125 71 109 70Q99 77 86 74Z" fill="'+a.c+'"/>'
+      else if(kind==='horse')mammalHead='<path d="M79 48Q84 35 98 36Q111 37 115 48L127 57Q123 68 109 68Q96 73 86 66Z" fill="'+a.c+'"/>'
+      else if(kind==='giraffe')mammalHead='<path d="M82 44Q87 32 99 33Q111 35 114 46L125 53Q121 63 108 62Q96 68 88 62Z" fill="'+a.c+'"/>';
       if(kind==='badger')muzzle='<path d="M83 42Q99 35 115 48L111 58Q98 52 84 59Z" fill="#f3eadd" stroke="'+ink+'" stroke-width="1.4"/><path d="M88 47Q99 42 108 48" fill="none" stroke="#343536" stroke-width="3"/>';
       if(kind==='redpanda')muzzle='<path d="M84 43Q94 35 104 44M103 44Q113 36 120 49M89 56L80 59M106 58L116 61" fill="none" stroke="#fff0d8" stroke-width="2.5"/><ellipse cx="109" cy="59" rx="7" ry="5" fill="'+a.a+'"/>';
       if(kind==='horse')muzzle='<path d="M101 56Q114 54 122 61L114 68L100 64Z" fill="'+a.a+'"/><path d="M111 61L116 61" stroke="'+ink+'" stroke-width="1.5"/>';
