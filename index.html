@@ -328,10 +328,10 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     {name:'キラキラ',bases:['しゃぼん玉','紙ふぶき','星の光','ハート光','虹の光']}
   ];
   var state={selections:Array(12).fill(0)},ownedItems=new Set();
-  var saved=localStorage.getItem('u7_avatar_workshop');
+  var wearLayout={},saved=localStorage.getItem('u7_avatar_workshop');
   try{if(saved){var parsed=JSON.parse(saved);if(Array.isArray(parsed.selections)&&parsed.selections.length===12)state.selections=parsed.selections.map(function(n){return Math.max(0,Math.min(29,Number(n)||0))});if(Array.isArray(parsed.owned))parsed.owned.forEach(function(k){ownedItems.add(String(k))});if(parsed.wearLayout&&typeof parsed.wearLayout==='object')wearLayout=parsed.wearLayout}}catch(e){}
   for(var ci=0;ci<12;ci++){ownedItems.add(ci+':0');ownedItems.add(ci+':'+state.selections[ci])}
-  var selectedCategory=0,avatarItemCost=2,activeWear=1,wearLayout={};
+  var selectedCategory=0,avatarItemCost=2,activeWear=1;
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function frame(inner,id,viewBox){return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+(viewBox||'0 0 120 120')+'" role="img" aria-hidden="true"><defs><linearGradient id="wash'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".45" stop-color="'+(palette[id.length%palette.length])+'" stop-opacity=".13"/><stop offset="1" stop-color="#fff" stop-opacity=".1"/></linearGradient><filter id="grain'+id+'" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="'+(id.length+7)+'" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/></filter><pattern id="pencil'+id+'" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-25)"><path d="M0 1H9 M0 6H5" stroke="#725a43" stroke-opacity=".14" stroke-width=".7"/></pattern></defs><g stroke="#634b3c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" filter="url(#grain'+id+')">'+inner+'</g><circle cx="60" cy="60" r="48" fill="url(#wash'+id+')" opacity=".16"/><g opacity=".24" fill="url(#pencil'+id+')"><circle cx="60" cy="60" r="48"/></g></svg>'}
   function animalSvg(index,id){
