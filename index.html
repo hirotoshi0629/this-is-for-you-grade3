@@ -357,9 +357,9 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     }
     if(scene)return frame(scene,id,'0 0 140 120');
     {
-      var mammalBody='<path d="M26 79Q30 66 45 64Q57 59 69 64Q81 61 92 67Q101 71 102 79Q97 89 83 91Q60 96 39 90Q29 87 26 79Z" fill="'+a.c+'"/><path d="M38 82Q62 90 88 82" fill="none" stroke="'+a.a+'" stroke-width="2" opacity=".62"/>';
+      var mammalBody='<path d="M22 77Q23 63 38 57Q51 51 67 55Q78 56 86 52Q98 49 106 57Q112 65 105 81Q98 94 77 96Q52 99 33 91Q23 87 22 77Z" fill="'+a.c+'"/><path d="M35 66Q53 57 71 63M46 84Q66 91 90 82" fill="none" stroke="'+a.a+'" stroke-width="2" opacity=".68"/><path d="M72 61Q83 56 96 59Q102 63 98 73Q89 76 80 71Z" fill="'+a.a+'" opacity=".55" stroke="none"/>';
       var mammalLegs='<path d="M39 82L37 98Q35 105 43 107L48 103L49 83M52 85L50 100Q49 106 56 107L60 102L61 84M76 84L77 101Q78 107 85 107L89 102L87 82M91 79L92 97Q94 103 101 102L104 97" fill="'+a.c+'"/><path d="M37 102Q43 100 48 103M50 102Q55 100 60 103M78 102Q84 100 89 103M93 98Q98 96 103 99" fill="none" stroke="'+a.a+'" stroke-width="2"/>';
-      var mammalHead='<path d="M79 44Q82 31 94 30Q107 31 111 44L109 57Q105 68 93 67Q80 64 79 54Z" fill="'+a.c+'"/>';
+      var mammalHead='<path d="M72 62Q70 49 79 38Q86 29 98 30Q111 31 114 43L124 55Q121 64 109 66Q100 72 89 68Z" fill="'+a.c+'"/>';
       var ear='';
       tail='<path d="M41 78Q16 66 19 87Q22 104 39 93" fill="none" stroke="'+a.c+'" stroke-width="12"/>';
       if(kind==='fox'||kind==='wolf'||kind==='cat')ear='<path d="M79 39L76 14L91 31M96 31L110 13L108 42" fill="'+a.c+'"/><path d="M82 34L81 23L88 32M100 31L106 22L105 36" fill="'+a.a+'" stroke="none"/>';
@@ -389,7 +389,7 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
       if(kind==='elephant')details='<path d="M105 57Q117 62 113 76M109 86Q114 82 115 76M46 76Q58 68 70 74" fill="none" stroke="'+a.a+'" stroke-width="2.5"/><path d="M110 67L116 69M108 74L114 76" stroke="#79898a" stroke-width="1.5"/>';
       if(kind==='cat')details='<path d="M92 57L98 57M91 61L84 60M98 61L106 60M89 65L80 67M101 65L110 67" fill="none" stroke="'+ink+'" stroke-width="1.3"/><path d="M84 46L89 44M101 44L106 46" stroke="#f5dbb7" stroke-width="2"/>';
       if(kind==='dog')details='<path d="M103 60L111 61M103 64L112 65M102 68L109 69" fill="none" stroke="#57473c" stroke-width="1.3"/><path d="M79 42Q73 37 71 32" fill="none" stroke="#f0d6b4" stroke-width="2"/>';
-      if(kind==='fox')details='<path d="M97 54Q107 53 115 61L107 66L94 61Z" fill="'+a.a+'"/><path d="M100 56Q108 57 113 61" fill="none" stroke="#edc99d" stroke-width="2"/>';
+      if(kind==='fox')details='<path d="M77 62Q83 57 91 61L99 72Q91 81 80 82L73 73Z" fill="#fff1dc" stroke="none"/><path d="M97 53Q108 52 118 60L109 66L95 61Z" fill="#fff1dc"/><path d="M101 56Q109 57 115 61" fill="none" stroke="#edc99d" stroke-width="2"/><path d="M86 45Q91 42 96 45M102 44Q107 42 111 46" fill="none" stroke="#6b452f" stroke-width="1.5"/>';
       if(kind==='wolf')details='<path d="M97 53L117 60L106 68L92 63Z" fill="'+a.a+'"/><path d="M85 29L80 18L90 27M102 27L110 16L108 31" fill="none" stroke="#e5e4df" stroke-width="2"/>';
       if(kind==='bear')details='<ellipse cx="103" cy="56" rx="10" ry="8" fill="'+a.a+'"/><path d="M98 61Q104 65 110 61" fill="none" stroke="#725641" stroke-width="1.3"/>';
       if(kind==='squirrel')details+='<g fill="#fff1d5"><circle cx="56" cy="70" r="2"/><circle cx="64" cy="68" r="2"/><circle cx="72" cy="72" r="2"/></g>';
@@ -402,13 +402,13 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
       if(kind==='boar')muzzle='<ellipse cx="108" cy="61" rx="11" ry="8" fill="'+a.a+'" stroke="'+ink+'" stroke-width="1.5"/><circle cx="109" cy="59" r="1.5" fill="'+ink+'"/><path d="M100 69Q103 78 107 70M112 70Q116 78 119 68" fill="#fff4da"/>';
       if(kind==='elephant')muzzle='<path d="M104 54Q120 59 115 83Q112 98 103 91Q109 81 103 73Z" fill="'+a.c+'" stroke="'+ink+'" stroke-width="1.8"/><path d="M108 62Q114 66 112 72M108 84Q113 81 113 75" fill="none" stroke="'+a.a+'" stroke-width="2"/>';
       if(kind==='bird'||kind==='owl'||kind==='penguin'||kind==='dolphin'||kind==='seal'||kind==='turtle'||kind==='frog'||kind==='dragon')muzzle='';
-      if(kind==='fox'||kind==='wolf'||kind==='badger'||kind==='redpanda'||kind==='boar'||kind==='horse'||kind==='giraffe')mammalHead='<path d="M79 42Q85 29 99 33Q108 36 109 51L122 59Q117 68 103 66L89 61Z" fill="'+a.c+'"/>';
+      if(kind==='fox'||kind==='wolf'||kind==='badger'||kind==='redpanda'||kind==='boar'||kind==='horse'||kind==='giraffe')mammalHead='<path d="M72 61Q70 48 80 37Q90 28 103 32Q113 35 115 47L130 57Q126 65 109 64Q99 71 87 68Z" fill="'+a.c+'"/>';
       if(kind==='badger')muzzle='<path d="M83 42Q99 35 115 48L111 58Q98 52 84 59Z" fill="#f3eadd" stroke="'+ink+'" stroke-width="1.4"/><path d="M88 47Q99 42 108 48" fill="none" stroke="#343536" stroke-width="3"/>';
       if(kind==='redpanda')muzzle='<path d="M84 43Q94 35 104 44M103 44Q113 36 120 49M89 56L80 59M106 58L116 61" fill="none" stroke="#fff0d8" stroke-width="2.5"/><ellipse cx="109" cy="59" rx="7" ry="5" fill="'+a.a+'"/>';
       if(kind==='horse')muzzle='<path d="M101 56Q114 54 122 61L114 68L100 64Z" fill="'+a.a+'"/><path d="M111 61L116 61" stroke="'+ink+'" stroke-width="1.5"/>';
       if(kind==='giraffe')muzzle='<ellipse cx="110" cy="50" rx="8" ry="6" fill="'+a.a+'"/>';
       var face=eye+muzzle;
-      var furLines='<path d="M43 72Q48 68 53 71M53 69Q59 64 64 68M65 71Q71 66 76 70M48 84Q53 81 58 84M65 89Q71 85 77 88" fill="none" stroke="'+a.a+'" stroke-width="1.4" opacity=".9"/>';
+      var furLines='<path d="M34 67Q39 63 44 65M43 62Q49 58 54 61M55 60Q61 57 66 60M42 76Q48 73 53 76M56 82Q62 79 68 82M68 87Q74 84 80 86M47 89Q53 92 59 91" fill="none" stroke="'+a.a+'" stroke-width="1.35" opacity=".92"/><path d="M34 70Q39 68 43 70M59 66Q64 64 68 67M75 62Q80 58 85 60" fill="none" stroke="#fff4dd" stroke-width="1.2" opacity=".9"/>';
       if(kind==='fox'||kind==='wolf'||kind==='cat'||kind==='deer'||kind==='badger'||kind==='hedgehog'||kind==='boar'||kind==='bear'||kind==='squirrel'||kind==='tanuki'||kind==='dog'||kind==='hamster'||kind==='panda'||kind==='koala'||kind==='lion'||kind==='elephant'||kind==='giraffe'||kind==='monkey'||kind==='redpanda'||kind==='horse'||kind==='sheep'||kind==='rabbit'){
         if(kind==='panda'){mammalBody='<ellipse cx="63" cy="78" rx="32" ry="20" fill="#f8f4ea"/>';mammalLegs='<path d="M42 82L39 101L50 106L55 101L54 82M71 82L71 101L82 106L87 100L86 81" fill="#303337"/>'}
         if(kind==='deer')details+='<g fill="#fff1d7" stroke="none"><circle cx="47" cy="72" r="2"/><circle cx="56" cy="68" r="2"/><circle cx="67" cy="72" r="2"/><circle cx="76" cy="69" r="2"/></g>';
@@ -485,7 +485,12 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     else if(cat===9)detail='<path d="M12 92Q35 82 58 91T108 90M21 99H101" fill="none" stroke="#fff5dd" stroke-width="2"/><path d="M24 83L28 77L32 83M91 82L95 76L99 82" fill="none" stroke="#668d61" stroke-width="1.5"/><circle cx="35" cy="88" r="1.8" fill="#e1a79b"/><circle cx="84" cy="88" r="1.8" fill="#e1a79b"/>';
     else if(cat===10)detail='<path d="M41 71H79M43 76H77M46 81H74M48 86H72" fill="none" stroke="#fff2d7" stroke-width="1.5"/><path d="M43 41Q59 34 76 41M38 52H82M44 102L42 108M78 102L80 108" fill="none" stroke="#765c45" stroke-width="1.6"/><circle cx="68" cy="58" r="2.2" fill="#fff6d9"/>';
     else detail='<circle cx="60" cy="58" r="19" fill="none" stroke="#fff5dc" stroke-width="1.6" stroke-dasharray="2 4"/><path d="M24 35L27 43L35 45L27 48L24 56L21 48L13 45L21 43Z M93 72L96 80L104 82L96 85L93 93L90 85L82 82L90 80Z" fill="#fff7dd"/><circle cx="45" cy="32" r="2.5" fill="#fff"/><circle cx="80" cy="47" r="2" fill="#fff"/>';
-    x+='<g stroke="#795e48" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">'+detail+'</g>';
+    var micro='';
+    if(cat===1||cat===2)micro='<path d="M31 59Q42 55 53 58M67 59Q78 54 89 58M40 73Q58 78 80 72M43 87Q60 91 77 87" fill="none" stroke="#fff9ec" stroke-width="1.2" opacity=".82"/><path d="M34 62L39 62M45 65L50 65M56 66L61 66M68 65L73 65M79 63L84 63" fill="none" stroke="#765a45" stroke-width=".8" stroke-dasharray="1 2"/>';
+    else if(cat===3||cat===6)micro='<circle cx="49" cy="48" r="1.5" fill="#fff"/><circle cx="71" cy="48" r="1.5" fill="#fff"/><path d="M60 40V46M60 75V82" fill="none" stroke="#fff8e6" stroke-width="1.1"/><path d="M32 53L36 56M84 56L88 53" fill="none" stroke="#8b694d" stroke-width=".9"/>';
+    else if(cat===5||cat===10)micro='<path d="M41 58Q48 54 54 58M67 58Q73 54 79 58M45 76Q60 80 75 76M46 88Q60 91 74 88" fill="none" stroke="#fff8e7" stroke-width="1.2" opacity=".8"/><circle cx="52" cy="46" r="1.4" fill="#fff"/><circle cx="70" cy="45" r="1.2" fill="#fff"/>';
+    else micro='<path d="M34 72Q45 67 54 71M63 69Q73 65 85 69M42 81Q54 78 65 82M70 88Q78 84 84 81" fill="none" stroke="#fff8e7" stroke-width="1.1" opacity=".85"/><circle cx="34" cy="48" r="1.2" fill="#fff"/><circle cx="88" cy="55" r="1.4" fill="#fff"/>';
+    x+='<g stroke="#795e48" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">'+detail+'</g><g stroke-linecap="round" stroke-linejoin="round" opacity=".78">'+micro+'</g>';
     var idd='i'+cat+'x'+base+'x'+id;
     return frame(x,idd);
   }
