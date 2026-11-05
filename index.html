@@ -411,7 +411,10 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     return frame(x,idd);
   }
   function makeItems(cat,catIndex){var items=[];if(catIndex===0)return animals.map(function(a,i){return {label:a.n,color:palette[i%palette.length],base:i}});cat.bases.forEach(function(base,bi){palette.forEach(function(color,ci){items.push({label:colorNames[ci]+base,color:color,base:bi})})});return items}
-  function persistAvatar(){localStorage.setItem('u7_avatar_workshop',JSON.stringify({selections:state.selections,owned:Array.from(ownedItems),wearLayout:wearLayout}))} function layoutFor(cat){var defaults={1:[35,3,30,24],2:[30,39,40,39],3:[38,52,25,22],4:[37,34,24,17],5:[3,66,24,24],6:[63,53,20,18],7:[60,67,26,25],8:[33,35,34,29],9:[0,0,100,100],10:[4,68,23,23],11:[68,4,23,23]},v=wearLayout[cat]||defaults[cat]||[35,35,30,30];return {x:v[0],y:v[1],w:v[2],h:v[3]}}
+  var defaultWearLayout={1:[35,3,30,24],2:[30,39,40,39],3:[38,52,25,22],4:[37,34,24,17],5:[3,66,24,24],6:[63,53,20,18],7:[60,67,26,25],8:[33,35,34,29],9:[0,0,100,100],10:[4,68,23,23],11:[68,4,23,23]};
+  function persistAvatar(){localStorage.setItem('u7_avatar_workshop',JSON.stringify({selections:state.selections,owned:Array.from(ownedItems),wearLayout:wearLayout}))}
+  function layoutFor(cat){var v=wearLayout[cat]||defaultWearLayout[cat]||[35,35,30,30];return {x:v[0],y:v[1],w:v[2],h:v[3]}}
+  function scaleForWear(cat){var base=defaultWearLayout[cat]||[35,35,30,30],current=layoutFor(cat);return Math.max(50,Math.min(180,Math.round(current.w/base[2]*100)))}
   function showToast(message){if(typeof toast==='function')toast(message)}
   function render(){
     var cats=document.getElementById('avatarCategories'),items=document.getElementById('avatarItems');
@@ -422,12 +425,44 @@ function startGiftRecord(){beginRecording('gift')}function playGiftRecord(){if(g
     document.getElementById('avatarBalance').textContent=points;
     var animalIndex=state.selections[0],animal=animals[animalIndex];
     document.getElementById('avatarAnimal').innerHTML=animalSvg(animalIndex,'previewanimal')+categories.slice(1).map(function(c,i){var ix=state.selections[i+1],it=makeItems(c,i+1)[ix];var cat=i+1,L=layoutFor(cat);return '<div class="avatar-wear-piece wear-'+cat+(activeWear===cat?' active-wear':'')+'" data-wear="'+cat+'" style="left:'+L.x+'%;top:'+L.y+'%;width:'+L.w+'%;height:'+L.h+'%">'+itemSvg(cat,it.base,it.color,'overlay'+i)+'</div>'}).join('');
-    document.getElementById('avatarName').textContent=animal.n; var adjust=document.getElementById('avatarScale'),currentLayout=layoutFor(activeWear);adjust.value=Math.round(currentLayout.w/30*100);adjust.disabled=false;document.getElementById('avatarAdjustLabel').textContent=categories[activeWear].name+'をドラッグで移動';adjust.oninput=function(){var l=layoutFor(activeWear),size=Number(this.value)*.30;l.w=size;l.h=size;wearLayout[activeWear]=[l.x,l.y,l.w,l.h];var el=document.querySelector('[data-wear="'+activeWear+'"]');if(el){el.style.width=l.w+'%';el.style.height=l.h+'%'}persistAvatar()}; document.querySelectorAll('.avatar-wear-piece').forEach(function(el){el.onpointerdown=function(ev){activeWear=Number(el.dataset.wear);var box=document.getElementById('avatarAnimal').getBoundingClientRect(),startX=ev.clientX,startY=ev.clientY,L=layoutFor(activeWear),origX=L.x,origY=L.y;el.setPointerCapture(ev.pointerId);el.onpointermove=function(move){if(!el.hasPointerCapture(move.pointerId))return;L.x=Math.max(-20,Math.min(90,origX+(move.clientX-startX)/box.width*100));L.y=Math.max(-20,Math.min(90,origY+(move.clientY-startY)/box.height*100));wearLayout[activeWear]=[L.x,L.y,L.w,L.h];el.style.left=L.x+'%';el.style.top=L.y+'%';};el.onpointerup=function(){persistAvatar()};document.querySelectorAll('.avatar-wear-piece').forEach(function(piece){piece.classList.toggle('active-wear',Number(piece.dataset.wear)===activeWear)});document.getElementById('avatarAdjustLabel').textContent=categories[activeWear].name+'をドラッグで移動';var adj=document.getElementById('avatarScale'),layout=layoutFor(activeWear);adj.value=Math.round(layout.w/30*100)}});
+    document.getElementById('avatarName').textContent=animal.n;
+    var adjust=document.getElementById('avatarScale');
+    adjust.value=scaleForWear(activeWear);
+    adjust.disabled=activeWear===0;
+    document.getElementById('avatarAdjustLabel').textContent=categories[activeWear].name+'をドラッグで移動・大きさ変更';
+    adjust.oninput=function(){
+      var cat=activeWear,l=layoutFor(cat),base=defaultWearLayout[cat]||[35,35,30,30],factor=Number(this.value)/100;
+      var centerX=l.x+l.w/2,centerY=l.y+l.h/2;
+      l.w=base[2]*factor;l.h=base[3]*factor;
+      l.x=Math.max(0,Math.min(100-l.w,centerX-l.w/2));
+      l.y=Math.max(0,Math.min(100-l.h,centerY-l.h/2));
+      wearLayout[cat]=[l.x,l.y,l.w,l.h];
+      var el=document.querySelector('[data-wear="'+cat+'"]');
+      if(el){el.style.left=l.x+'%';el.style.top=l.y+'%';el.style.width=l.w+'%';el.style.height=l.h+'%'}
+      persistAvatar()
+    };
+    document.querySelectorAll('.avatar-wear-piece').forEach(function(el){
+      el.onpointerdown=function(ev){
+        activeWear=Number(el.dataset.wear);
+        var box=document.getElementById('avatarAnimal').getBoundingClientRect(),startX=ev.clientX,startY=ev.clientY,L=layoutFor(activeWear),origX=L.x,origY=L.y;
+        el.setPointerCapture(ev.pointerId);
+        el.onpointermove=function(move){
+          if(!el.hasPointerCapture(move.pointerId))return;
+          L.x=Math.max(-20,Math.min(90,origX+(move.clientX-startX)/box.width*100));
+          L.y=Math.max(-20,Math.min(90,origY+(move.clientY-startY)/box.height*100));
+          wearLayout[activeWear]=[L.x,L.y,L.w,L.h];el.style.left=L.x+'%';el.style.top=L.y+'%'
+        };
+        el.onpointerup=function(){persistAvatar()};
+        document.querySelectorAll('.avatar-wear-piece').forEach(function(piece){piece.classList.toggle('active-wear',Number(piece.dataset.wear)===activeWear)});
+        document.getElementById('avatarAdjustLabel').textContent=categories[activeWear].name+'をドラッグで移動・大きさ変更';
+        document.getElementById('avatarScale').value=scaleForWear(activeWear)
+      }
+    });
     document.getElementById('avatarWorn').innerHTML=categories.slice(1).map(function(c,i){var idx=state.selections[i+1],item=makeItems(c,i+1)[idx];return '<span>'+itemSvg(i+1,item.base,item.color,'worn'+i)+' '+esc(item.label)+'</span>'}).join('');
     var homeArt=document.getElementById('illAvatar');if(homeArt)homeArt.innerHTML=animalSvg(0,'homefriend')+itemSvg(1,4,palette[0],'homehat')+itemSvg(5,0,palette[4],'homeflower');
   }
-  window.selectAvatarCategory=function(i){selectedCategory=Math.max(0,Math.min(11,Number(i)||0));render()};
-  window.chooseAvatarItem=function(i){i=Math.max(0,Math.min(29,Number(i)||0));var key=selectedCategory+':'+i;if(!ownedItems.has(key)){if(points<avatarItemCost){showToast('ポイントが足りないよ。練習してポイントを集めよう！');return}points-=avatarItemCost;ownedItems.add(key);saveProgress()}state.selections[selectedCategory]=i;persistAvatar();render()};
+  window.selectAvatarCategory=function(i){selectedCategory=Math.max(0,Math.min(11,Number(i)||0));if(selectedCategory>0)activeWear=selectedCategory;render()};
+  window.chooseAvatarItem=function(i){i=Math.max(0,Math.min(29,Number(i)||0));var key=selectedCategory+':'+i;if(!ownedItems.has(key)){if(points<avatarItemCost){showToast('ポイントが足りないよ。練習してポイントを集めよう！');return}points-=avatarItemCost;ownedItems.add(key);saveProgress()}state.selections[selectedCategory]=i;if(selectedCategory>0)activeWear=selectedCategory;persistAvatar();render()};
   window.saveAvatar=function(){persistAvatar();showToast('アバターを保存したよ')};
   window.resetAvatar=function(){state.selections=Array(12).fill(0);selectedCategory=0;persistAvatar();render()};
   render();
